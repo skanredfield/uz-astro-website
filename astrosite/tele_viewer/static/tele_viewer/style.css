@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+.image_column {
+    float: left;
+    width: 100%;
+    padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.image_row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
