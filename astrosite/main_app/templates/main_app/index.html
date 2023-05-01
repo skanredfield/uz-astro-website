@@ -20,7 +20,7 @@
                 <div class="card-body">
                   <h4 class="card-title">Weather Data</h4>
                   <p class="card-text">Latest weather data at the telescope site. Use the dropdown menu to view specific parameters.</p>
-                  <a href="#" class="btn btn-primary">Learn More</a>
+                  <a href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#info_modal_weather">Learn More</a>
                 </div>
                 {% include "weather_monitor/index.html" %}
             </div>
@@ -32,9 +32,57 @@
                 <div class="card-body">
                   <h4 class="card-title">Status Snaps</h4>
                   <p id="snap-details" class="card-text">Sky view.</p>
-                  <a href="#" class="btn btn-primary">Learn More</a>
+                  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_snaps">Learn More</a>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal" id="info_modal_snaps">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">About snaps</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+            They're just cool.
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+
+    <div class="modal" id="info_modal_weather">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">About the weather</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+            It's usually sunny.
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+    
+        </div>
         </div>
     </div>
 

@@ -18,3 +18,11 @@
     clear: both;
     display: table;
 }
+
+.logged-in {
+    color: rgb(38, 255, 0);
+}
+  
+.logged-out {
+color: red;
+}
