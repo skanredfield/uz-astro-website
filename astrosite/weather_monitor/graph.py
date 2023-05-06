@@ -1,37 +1,26 @@
-import plotly
 import plotly.graph_objects as go
 
 from datetime import datetime, timedelta
 
-# import pandas as pd
-# import json
-
 from django_plotly_dash import DjangoDash
-# from django.http import JsonResponse
-# from django.core import serializers
 
 from dash import dcc, html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 
-# from dash.exceptions import PreventUpdate
-
 from .models import WeatherData
 
 
 external_stylesheets = [
-    'main_app/style.css',
-    'https://codepen.io/chriddyp/pen/bWLwgP.css',
+    # 'main_app/style.css',
+    # 'https://codepen.io/chriddyp/pen/bWLwgP.css',
     dbc.themes.BOOTSTRAP
 ]
 
 app = DjangoDash('WeatherData_DashApp', external_stylesheets=external_stylesheets)
 app.css.append_css({ "external_url" : "/static/main_app/style.css" })
 app.layout = html.Div([
-    # html.Div([
-    #     html.H4('Weather Data'),
-    # ]),
-    html.Div(id='live-update-text'),
+    html.Div(id='live-update-text', style={'padding-bottom': '5px'}),
     html.Div([
         html.Div([
             dcc.Dropdown(
@@ -77,20 +66,9 @@ app.layout = html.Div([
             interval=1*60000, # in milliseconds
             n_intervals=0
         ),
-        # dcc.Store stores the intermediate value
-        # dcc.Store(id='intermediate-value')
     ])
 ])
 
-# @app.callback(Output('intermediate-value', 'data'), 
-#               Input('interval-component', 'n_intervals'),
-#               Input('dropdown-range', 'value'))
-# def clean_data(n, value):
-#     query_set = WeatherData.objects.order_by("-reading_date")[:3]
-    
-#     return serializers.serialize("json", list(query_set))
-
-    #  return weather_data.to_json(date_format='iso', orient='split')
 
 @app.callback(Output('live-update-text', 'children'),
               Input('interval-component', 'n_intervals'))
@@ -99,12 +77,10 @@ def update_metrics(n):
     is_safe = latest.roof_safe_to_open and latest.weather_permits_observations
     return [
         html.Span('Safe to observe?', style={'margin-left': '30px', 'fontSize': '16px'}),
-        # html.Span('●', className='logged-in' if is_safe else 'logged-out'),
         html.Span([
             dbc.Badge("Yes", color="success", className="me-1") if is_safe 
             else dbc.Badge("No", color="danger", className="me-1")
         ], style={'margin-left': '5px', 'fontSize': '16px'}),
-        # html.Span('Yes', className=["badge", "bg-success"]) if is_safe else html.Span('No', className=["badge", "bg-danger"]),
         html.Span('(@ {0})'.format(latest.reading_date), style={'margin-left': '5px', 'fontSize': '16px'}),
     ]
 
@@ -114,15 +90,7 @@ def update_metrics(n):
               Input('interval-component', 'n_intervals'),
               Input('dropdown-dataset', 'value'),
               Input('dropdown-range', 'value'))
-            #   Input('intermediate-value', 'data'))
 def update_graph_live(n, value_dataset, value_range):
-    # if data is None:
-    #     raise PreventUpdate
-
-    # data is transported over the network via the clean_data function
-    # weather_data = list(serializers.deserialize("json", data))
-    # weather_data = json.loads(data)
-
     if value_range == "last_24_hours":
         time_range = datetime.now() - timedelta(days=1)
         weather_data = WeatherData.objects.filter(reading_date__gte=time_range).order_by("-reading_date")
@@ -169,8 +137,6 @@ def draw_figure(data_field_name: str, weather_data, attr_name: str):
         data['time'].append(entry.reading_date)
         data[data_field_name].append(getattr(entry, attr_name))
 
-    # Create the graph with subplots
-    # fig = plotly.tools.make_subplots(rows=1, cols=1, vertical_spacing=0.2, template="plotly_white")
     fig = go.Figure()
     fig.update_layout(template="plotly_white")
     fig['layout']['margin'] = {
@@ -181,13 +147,5 @@ def draw_figure(data_field_name: str, weather_data, attr_name: str):
     fig.add_trace(go.Scatter(x=data['time'], y=data[data_field_name],
                     mode='lines+markers',
                     name=data_field_name))
-
-    # fig.append_trace({
-    #     'x': data['time'],
-    #     'y': data[data_field_name],
-    #     'name': data_field_name,
-    #     'mode': 'lines+markers',
-    #     'type': 'scatter'
-    # }, 1, 1)
 
     return fig
