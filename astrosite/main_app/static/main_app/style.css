@@ -1,28 +1,5 @@
-/* p {
-    color: red;
+/* .logo {
+    background: white url("images/logo-instytut-eng.svg") no-repeat;
+    width: 100%;
+    height: auto;
 } */
-
-* {
-    box-sizing: border-box;
-}
-
-.column {
-    float: left;
-    width: 50%;
-    padding: 5px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.logged-in {
-    color: rgb(38, 255, 0);
-}
-  
-.logged-out {
-color: red;
-}

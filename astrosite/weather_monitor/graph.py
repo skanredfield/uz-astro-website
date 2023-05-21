@@ -21,8 +21,8 @@ app = DjangoDash('WeatherData_DashApp', external_stylesheets=external_stylesheet
 app.css.append_css({ "external_url" : "/static/main_app/style.css" })
 app.layout = html.Div([
     html.Div(id='live-update-text', style={'padding-bottom': '5px'}),
-    html.Div([
-        html.Div([
+    dbc.Row([
+        dbc.Col([
             dcc.Dropdown(
                 id='dropdown-dataset',
                 options=[
@@ -38,10 +38,9 @@ app.layout = html.Div([
                 value='wind',
                 clearable=False
                 
-            )],
-            style={'width': '50%', 'margin-left': '30px', 'margin-right': '5px'}
+            )]
         ),
-        html.Div([
+        dbc.Col([
             dcc.Dropdown(
                 id='dropdown-range',
                 options=[
@@ -54,13 +53,14 @@ app.layout = html.Div([
                 value='last_24_hours',
                 clearable=False
                 
-            )],
-            style={'width': '50%', 'margin-left': '5px', 'margin-right': '10px'}
+            )]
         )],
         style={'display': 'flex'}
     ),
     html.Div([
-        dcc.Graph(id='live-update-graph'),
+        dcc.Graph(
+            id='live-update-graph'
+        ),
         dcc.Interval(
             id='interval-component',
             interval=1*60000, # in milliseconds
