@@ -1,5 +1,9 @@
-/* .logo {
-    background: white url("images/logo-instytut-eng.svg") no-repeat;
-    width: 100%;
-    height: auto;
-} */
+body {
+    background: url("images/starry-background.png");
+    background-repeat: repeat;
+    background-size: 400px 400px;
+}
+
+.grid-item {
+    margin-bottom: 10px;
+}

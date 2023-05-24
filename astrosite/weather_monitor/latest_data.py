@@ -50,7 +50,10 @@ def update_metrics(n):
                 dbc.Badge("Yes", color="success", className="me-1") if is_safe 
                 else dbc.Badge("No", color="danger", className="me-1")
             ], style={'margin-left': '5px', 'fontSize': '16px'}),
-            html.Span('(@ {0})'.format(latest.reading_date), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
+        html.Div([
+            html.Span('Date and time: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0}'.format(latest.get_formatted_datetime()), style={'margin-left': '5px', 'fontSize': '16px'}),
         ]),
         html.Div([
             html.Span('Temperature: ', style={'margin-left': '30px', 'fontSize': '16px'}),
@@ -61,8 +64,12 @@ def update_metrics(n):
             html.Span('{0} km/h'.format(latest.wind_level), style={'margin-left': '5px', 'fontSize': '16px'}),
         ]),
         html.Div([
-            html.Span('Clouds: ', style={'margin-left': '30px', 'fontSize': '16px'}),
-            html.Span('{0}'.format(latest.clouds_level), style={'margin-left': '5px', 'fontSize': '16px'}),
+            html.Span('Clouds temperature: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0} °C'.format(latest.clouds_level), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
+        html.Div([
+            html.Span('Humidity: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0}%'.format(latest.humidity_level), style={'margin-left': '5px', 'fontSize': '16px'}),
         ])
     ]
 

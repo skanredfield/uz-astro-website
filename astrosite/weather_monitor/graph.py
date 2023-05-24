@@ -20,7 +20,6 @@ external_stylesheets = [
 app = DjangoDash('WeatherData_DashApp', external_stylesheets=external_stylesheets)
 app.css.append_css({ "external_url" : "/static/main_app/style.css" })
 app.layout = html.Div([
-    html.Div(id='live-update-text', style={'padding-bottom': '5px'}),
     dbc.Row([
         dbc.Col([
             dcc.Dropdown(
@@ -59,31 +58,16 @@ app.layout = html.Div([
     ),
     html.Div([
         dcc.Graph(
-            id='live-update-graph'
+            id='live-update-graph',
+            style={'height': '100%'}
         ),
         dcc.Interval(
             id='interval-component',
             interval=1*60000, # in milliseconds
             n_intervals=0
         ),
-    ])
-])
-
-
-@app.callback(Output('live-update-text', 'children'),
-              Input('interval-component', 'n_intervals'))
-def update_metrics(n):
-    latest = WeatherData.objects.latest('reading_date', 'roof_safe_to_open', 'weather_permits_observations')
-    is_safe = latest.roof_safe_to_open and latest.weather_permits_observations
-    return [
-        html.Span('Safe to observe?', style={'margin-left': '30px', 'fontSize': '16px'}),
-        html.Span([
-            dbc.Badge("Yes", color="success", className="me-1") if is_safe 
-            else dbc.Badge("No", color="danger", className="me-1")
-        ], style={'margin-left': '5px', 'fontSize': '16px'}),
-        html.Span('(@ {0})'.format(latest.reading_date), style={'margin-left': '5px', 'fontSize': '16px'}),
-    ]
-
+    ], style={'height': '100%'})
+], style={'height': '100%'})
 
 # Multiple components can update everytime interval gets fired.
 @app.callback(Output('live-update-graph', 'figure'),

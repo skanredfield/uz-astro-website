@@ -1,19 +1,17 @@
-<!-- {% load plotly_dash %}
-
-{% plotly_app_bootstrap name="WeatherData_DashApp" aspect="1by1" %} -->
-<!-- {% plotly_app name="WeatherData_DashApp" ratio=0.9 %} -->
-
-
-{% load static %}
 {% load plotly_dash %}
 
-<!doctype html>
-<html lang="en">
-    <head>
-        {% plotly_header %}
-    </head>
-    <body>
-        {% plotly_app name="WeatherData_DashApp" ratio=0.9 %}
-    </body>
-    {% plotly_footer %}
-</html>
+{% plotly_app_bootstrap name="WeatherData_DashApp" %}
+
+<style>
+    iframe {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+    .dash-graph {
+        aspect-ratio: 16 / 9;
+    }
+    body {
+        margin: 0;
+    }
+
+</style>

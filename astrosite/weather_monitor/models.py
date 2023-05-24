@@ -50,6 +50,9 @@ class WeatherData(models.Model):
             str(self.humidity_level),  
             str(self.dew_point)
         )
+    
+    def get_formatted_datetime(self):
+        return self.reading_date.strftime("%m/%d/%Y, %H:%M:%S")
 
     def __str__(self) -> str:
         return str(self.reading_date)
