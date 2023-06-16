@@ -33,9 +33,14 @@
     <!-- <link rel="shortcut icon" type="image/ico" href="{% static 'main_app/images/favicon.ico' %}"> -->
 </head>
 
-<body onload="fixMasonry();">
+<body onload="runOnLoad()">
 
     <script>
+        function runOnLoad() {
+            fixMasonry();
+            startImageRefreshLoop();
+        }
+
         function fixMasonry() {
             var msnry = new Masonry('.row', {
                 percentPosition: true
@@ -55,6 +60,15 @@
             setTimeout(function () {
                 msnry.layout();
             }, 5000);
+        }
+        
+        function startImageRefreshLoop() {
+            setInterval(function () {
+                var x = document.querySelectorAll(".img-updatable");
+                for (var i = x.length - 1; i >= 0; i--) {
+                    x[i].src = x[i].src + '#' + new Date().getTime();
+                };
+            }, 60000);
         }
     </script>
 
@@ -79,7 +93,7 @@
                     <div class="card-body">
                     <h4 class="card-title">Latest Data</h4>
                     <p class="card-text">Latest weather in Chile at the telescope's location.</p>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_weather">Learn More</a>
+                    <!-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_weather">Learn More</a> -->
                     </div>
                     {% include "weather_monitor/briefing.html" %}
                 </div>
@@ -90,31 +104,31 @@
                     {% include "tele_viewer/telescope_view.html" %}
                     <div class="card-body">
                     <!-- <h4 class="card-title">Status Snaps</h4> -->
-                    <p id="snap-details" class="card-text">Sky view.</p>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_snaps">Learn More</a>
+                    <p id="snap-details" class="card-text">Live image (updated every few minutes) of the ROTUZ telescope.</p>
+                    <!-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_snaps">Learn More</a> -->
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-4">
                 <div class="card shadow p-3">
-                    {% include "tele_viewer/sky_view.html" %}
                     <div class="card-body">
-                    <!-- <h4 class="card-title">Status Snaps</h4> -->
-                    <p id="snap-details" class="card-text">Sky view.</p>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_snaps">Learn More</a>
+                    <h4 class="card-title">Weather Data</h4>
+                    <p class="card-text">Latest weather data at the telescope site. Use the dropdown menu to view specific parameters.</p>
+                    <!-- <a href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#info_modal_weather">Learn More</a> -->
                     </div>
+                    {% include "weather_monitor/index.html" %}
                 </div>
             </div>
             
             <div class="col-sm-8">
                 <div class="card shadow p-3">
+                    {% include "tele_viewer/sky_view.html" %}
                     <div class="card-body">
-                    <h4 class="card-title">Weather Data</h4>
-                    <p class="card-text">Latest weather data at the telescope site. Use the dropdown menu to view specific parameters.</p>
-                    <a href="#" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#info_modal_weather">Learn More</a>
+                    <!-- <h4 class="card-title">Status Snaps</h4> -->
+                    <p id="snap-details" class="card-text">Panoramic sky camera showing the current weather conditions at the observation location in Chile.</p>
+                    <!-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info_modal_snaps">Learn More</a> -->
                     </div>
-                    {% include "weather_monitor/index.html" %}
                 </div>
             </div>
         </div>

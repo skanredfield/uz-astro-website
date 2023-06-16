@@ -41,7 +41,14 @@ def update_metrics(n):
     # Brightness: Sunny
     # Rain: Dry
     # Clouds: Clear
-    latest = WeatherData.objects.latest('reading_date', 'roof_safe_to_open', 'weather_permits_observations')
+    try:
+        latest = WeatherData.objects.latest('reading_date', 'roof_safe_to_open', 'weather_permits_observations')
+    except WeatherData.DoesNotExist:
+        return [
+            html.Div([
+                html.Span('No records found.')
+            ])
+        ]
     is_safe = latest.roof_safe_to_open and latest.weather_permits_observations
     return [
         html.Div([
@@ -64,12 +71,28 @@ def update_metrics(n):
             html.Span('{0} km/h'.format(latest.wind_level), style={'margin-left': '5px', 'fontSize': '16px'}),
         ]),
         html.Div([
+            html.Span('Gust: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0} km/h'.format(latest.wind_gust_level), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
+        html.Div([
             html.Span('Clouds temperature: ', style={'margin-left': '30px', 'fontSize': '16px'}),
             html.Span('{0} °C'.format(latest.clouds_level), style={'margin-left': '5px', 'fontSize': '16px'}),
         ]),
         html.Div([
             html.Span('Humidity: ', style={'margin-left': '30px', 'fontSize': '16px'}),
             html.Span('{0}%'.format(latest.humidity_level), style={'margin-left': '5px', 'fontSize': '16px'}),
-        ])
+        ]),
+        html.Div([
+            html.Span('Dew point: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0} °C'.format(latest.dew_point), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
+        html.Div([
+            html.Span('Brightness level: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0}'.format(latest.light_level), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
+        html.Div([
+            html.Span('Rain level: ', style={'margin-left': '30px', 'fontSize': '16px'}),
+            html.Span('{0}'.format(latest.rain_level), style={'margin-left': '5px', 'fontSize': '16px'}),
+        ]),
     ]
 
