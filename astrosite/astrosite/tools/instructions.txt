@@ -1,0 +1,8 @@
+https://arshovon.com/blog/python-background/
+
+1) From this directory run:
+nohup ./run_scraper_bg.sh &
+2) Press Enter
+3) Done!
+
+4) Note the process id in case it needs to be stopped.
